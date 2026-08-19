@@ -1,0 +1,204 @@
+% !TeX root = linear-codes.tex
+\section{The transition probability}
+
+\subsection{Fourier analysis on the cube}
+For functions $f,g \colon\field_2^n\to\reals$, let
+$\iprod{f}{g}=\sum_x f(x)g(x)$. Define the Fourier basis
+functions $\chi_y$ for $y\in\field_2^n$ as
+$\chi_y(x) = (-1)^{x\cdot y}$. Note that
+$\iprod{\chi_y}{\chi_y}=2^n$ and for $y\neq z$ we have
+$\iprod{\chi_y}{\chi_z}=0$.
+We define the Fourier transform of a function
+as the coefficients in this character basis:
+$$
+\hat f(y) = \iprod{f}{\chi_y}.
+$$
+Note our Fourier transform is $2^{n/2}$ times a unitary.
+The inverse transform is thus $2^{-n/2}$ times a unitary
+given by
+$$
+f = \E_y\sparen{\hat f(y)\chi_y}.
+$$
+
+\subsection{Fourier estimates for Hamming balls}
+
+The following two consequences of the sharp moment and tail
+bounds of Kirshner and Samorodnitsky \cite[Corollary 1.4 and
+Theorem 1.5]{KirshnerS2021} are all that we need.  Their
+derivation is given in \autoref{sec:moment-tail-derivation}.
+
+\begin{lemma}[Fourier estimates for the punctured Hamming
+ball]
+\label{lem:ball-fourier-estimates}
+Let $w=d-1$, and let
+$$
+\mu(x)=\frac{\indicate{x\in\ball}}{V}.
+$$
+Fix $\eps>0$ and suppose
+$$
+\lg n\ll w\le(1/2-\eps)n.
+$$
+Then
+$$
+\E_y\abs{\hat\mu(y)}^3
+=O\left(\frac1{Vn^3}\right)
+$$
+and
+$$
+\Pr_y\sparen{\abs{\hat\mu(y)}>1/n}
+\le
+2^{-n+\frac{2n\lg n}{w}
+\lg\nparen{\frac{ew}{\lg n}}}.
+$$
+\end{lemma}
+
+\subsection{Proof of the transition estimate}
+
+Fourier inversion gives
+$$
+p_\ell=\E_y\hat\mu(y)^\ell.
+$$
+It follows from the identity in the preceding section that
+$$
+\Pr[W_\tau=e_{n+1}]
+=e^{-\tau}\E_y\sinh\nparen{\tau\hat\mu(y)}.
+$$
+Moreover,
+$$
+\E_y\hat\mu(y)=\mu(0)=0.
+$$
+Set
+$$
+s(z)\defeq\sinh z-z.
+$$
+We therefore have
+$$
+\Pr[W_\tau=e_{n+1}]
+=e^{-\tau}\E_y s\nparen{\tau\hat\mu(y)}.
+$$
+
+We shall use
+$$
+s(z)\le0\quad(z\le0),
+\qquad
+s(z)\le(\sinh1-1)z^3\quad(0\le z\le1),
+\qquad
+s(z)\le\frac12e^z\quad(z\ge1).
+$$
+Since $\abs{\hat\mu(y)}\le1$, it follows that
+$$
+\Pr[W_\tau=e_{n+1}]
+\le
+(\sinh1-1)e^{-\tau}\tau^3
+\E_y\abs{\hat\mu(y)}^3
++
+\frac12\Pr_y[\hat\mu(y)>1/\tau].
+$$
+
+Since
+$$
+\tau<R\le n\ln2<n,
+$$
+the first term is
+$$
+O\nparen{\frac{e^{-\tau}}V}.
+$$
+Since $\tau=\Theta(n)$, for all sufficiently large $n$ this is
+less than
+$$
+\frac{\tau e^{-\tau}}{2V}.
+$$
+
+For the second term, put
+$$
+\theta\defeq
+\frac{2\lg n}{w}\lg\nparen{\frac{ew}{\lg n}}.
+$$
+Our assumption $w\gg\lg n$ implies $\theta\longrightarrow0$.
+The same lemma gives
+$$
+\Pr_y\sparen{\hat\mu(y)>1/\tau}
+\le
+\Pr_y\sparen{\abs{\hat\mu(y)}>1/n}
+\le2^{-n(1-\theta)}.
+$$
+Since $R=\Theta(n)$, for all sufficiently large $n$ we have
+$n\theta\ln2\le\zeta R/2$.  Therefore
+$$
+\begin{aligned}
+\frac{\frac12 2^{-n(1-\theta)}}
+     {\tau e^{-\tau}/V}
+&=
+\frac1{2\tau}
+\exp\left(-R+\tau+n\theta\ln2\right)\\
+&\le
+\frac1{2\tau}e^{-\zeta R/2}
+<\frac12
+\end{aligned}
+$$
+for all sufficiently large $n$.  This proves
+the desired transition bound, and hence $\E Z<1$.
+
+Some choice of $M$ therefore has no odd circuit in $\kero$.
+Appending the corresponding row $v$ described in the preceding
+section produces a distance-$d$ code of size at least
+$$
+2^{n-m-1}
+=\frac{\tau2^n}{2V}
+\ge
+\frac{(1-\zeta)R}{4}\frac{2^n}{V}.
+$$
+Thus, for every fixed $0<\zeta<1$ and all sufficiently large $n$,
+there is a code $C$ satisfying
+$$
+\size{C}
+\ge
+\frac{1-\zeta}{4}
+\ln\nparen{\frac{2^n}{V}}\frac{2^n}{V}.
+$$
+As $\zeta$ can be chosen arbitrarily small, there are codes for
+which
+$$
+\liminf_{n\longrightarrow\infty}
+\frac{4V\size{C}}{2^n\ln(2^n/V)}\ge1.
+$$
+For example, if $d/n\longrightarrow1/5$, then the multiplicative
+improvement over the Gilbert--Varshamov bound satisfies
+$$
+\liminf_{n\longrightarrow\infty}
+\frac1n\frac{\size{C}}{2^n/V}
+\ge
+\frac{\ln2}{4}\nparen{1-\entb{1/5}}
+=0.048\ldots.
+$$
+
+\begin{remark}
+\label{rem:linear-independence}
+A slight modification also shows that $\kero$ is linearly
+independent, with slightly larger numerical constants in the
+estimates but no loss in the leading asymptotic constant.
+Let $Z_{\mathrm{all}}$ count all circuits in $\kero$, and put
+$\phi(z)=e^z-1-z-z^2/2$. The circuit count and Fourier
+inversion give
+$$
+\E Z_{\mathrm{all}}
+\le\frac V\tau\sum_{\ell\ge3}\frac{\tau^\ell}{\ell!}p_\ell
+=\frac V\tau\E_y\phi\nparen{\tau\hat\mu(y)}.
+$$
+We have $\phi(z)\le0$ for $z\le0$,
+$\phi(z)\le(e-5/2)z^3$ for $0\le z\le1$, and
+$\phi(z)\le e^z$ for $z\ge1$. Splitting at
+$\hat\mu(y)=1/\tau$ and applying
+\autoref{lem:ball-fourier-estimates} as above yields
+$$
+\begin{aligned}
+\E Z_{\mathrm{all}}
+&\le(e-5/2)V\tau^2\E_y\abs{\hat\mu(y)}^3
+  +\frac{Ve^\tau}{\tau}\Pr_y[\hat\mu(y)>1/\tau]\\
+&\le O(1/\tau)+\frac{e^{-\zeta R/2}}{\tau}
+=o(1).
+\end{aligned}
+$$
+Thus $\kero$ is linearly independent with probability $1-o(1)$
+for the same choice of $m$.
+\end{remark}

@@ -1,0 +1,29 @@
+% !TeX root = linear-codes.tex
+\renewenvironment{abstract}{\small \list{}{%
+    \setlength{\leftmargin}{10mm}%
+    \setlength{\rightmargin}{\leftmargin}%
+    \listparindent 0em%
+  }\item\relax{\bf Abstract.}}{\endlist}
+
+\begin{abstract}
+Fix $\eps>0$, and let $n$, $d$ satisfy
+$\lg n\ll d\le (1/2-\eps)n$. We show the existence of linear
+codes over $\field_2^n$ of distance $d$ and size at least
+$$
+c_\eps n\,\frac{2^n}{\sum_{i=1}^{d-1}\binom ni}
+$$
+for some $c_\eps>0$ depending on $\eps$ only, which is
+$\Omega(n)$ times the Gilbert--Varshamov bound. Our proof is
+a straightforward refinement of the folklore union-bound
+argument and gives the largest known linear codes in the
+regime $e\sqrt{n}+\Omega(\lg n) \le d \le (1/2-\eps)n$.
+\end{abstract}
+
+
+% More
+%precisely, our proof gives
+%$$
+%(1-o(1))\frac{\ln(2^n/V)}4\frac{2^n}{V}.
+%$$
+%In particular, when $d=o(n)$ the improvement factor is
+%$(\ln 2/4-o(1))n$.

@@ -1,0 +1,81 @@
+% !TeX root = linear-codes.tex
+\section{Introduction}
+\label{sec:intro}
+In this paper we exhibit binary linear codes of blocklength
+$n$ and size $\Omega(n)$ times the Gilbert--Varshamov
+bound for any distance $d$ in the range
+$\lg n\ll d\le(1/2-\eps)n$. Denote
+\begin{align*}
+  \ball=\setbuilder{x\in\field_2^n}{0<|x|<d}
+\end{align*}
+the set of all 0-1 vectors with weight between 1 and $d-1$,
+and set $V=|\ball|$. The Gilbert--Varshamov bound
+\cite{Gilbert1952, Varshamov1957} says that there exists a
+code of size at least
+\begin{align*}
+  \frac{2^n}{V+1},
+\end{align*}
+and such a code may be chosen to be linear
+\cite{Varshamov1957}. For fixed relative distance $d/n$,
+Jiang and Vardy \cite{JiangV2004} obtained a superconstant
+multiplicative improvement by exhibiting nonlinear codes
+whose size is $\Omega(\lg V)$
+times the Gilbert--Varshamov bound. The improvement is
+$\Omega(n)$ when $d/n$ is a constant and $\Omega(d\lg(n/d))$
+for $d\ll n$.
+
+Gaborit and Zémor \cite{GaboritZ2008} obtained an
+$\Omega(n)$ improvement for linear codes, but only at rate
+$1/2$ and for certain blocklengths $n=2p^m$. The rate
+parameter $1/2$ corresponds to distance
+$d=\delta_0n+\Theta(\lg n)$, where $\delta_0\approx0.11$ is
+the constant satisfying $\entb{\delta_0}=1/2$. More
+recently, Hao, Huang, Livshyts, and Tikhomirov
+\cite{HaoHLT2022} obtained an $\Omega(\sqrt n)$ improvement
+for general binary linear codes at fixed relative distance
+$d/n$. Yuan and Zhu \cite{YuanZ2026} gave another proof of
+the same $\Omega(\sqrt n)$ improvement and extended the
+result to quantum codes.
+%
+\input{union-bound}
+%
+
+We show that a straightforward refinement of the folklore
+union-bound argument gives an $\Omega(n)$ multiplicative
+improvement to the Gilbert--Varshamov bound uniformly
+throughout the range $\lg n\ll d\le(1/2-\eps)n$. This
+establishes the largest known linear codes for
+$e \sqrt{n} + \Omega(\lg n)\le d \le (1/2-\eps)n$.
+%
+Recall that a linear code of size $2^{n-r}$ may be specified
+through its parity check matrix $H\in\field_2^{r\times n}$
+satisfying $Hx \ne 0$ for all $x\in \ball$. Let $M$ be
+chosen uniformly at random from $\field_2^{r\times n}$ and
+put $\kero=\setbuilder{x\in \ball}{Mx = 0}$. By linearity of
+expectation,
+%
+$\E\sparen{\size{\kero}}=\size{\ball}2^{-r}$.
+%
+When $r>\lg\size{\ball}$, we get
+$\Pr\sparen{\kero\neq\emptyset} \le \E\sparen{\size{\kero}}<
+1$, therefore an $r\times n$ parity check matrix for a
+distance $d$ code is guaranteed to exist, which is the
+folklore union-bound argument.
+
+If we choose $r = \lg\size{\ball}-\lg(cn)$ instead, we have
+$\E[\size{\kero}]=cn$ and we can no longer use the union
+bound to argue $\Pr[\kero=\emptyset]>0$. We show that, for
+small enough $c$, there is a choice of $M$ for which $\kero$
+contains no odd circuit, that is, no inclusion-minimal
+linearly dependent subset of odd cardinality. This allows
+us to extend $M$ with just one more carefully chosen
+parity-check row which maps all elements of $\kero$ to
+nonzero. Indeed, every dependency among the elements of
+$\kero$ then has even cardinality. Thus, if $\mathbf K$ is
+the matrix whose columns are the elements of $\kero$, the
+all-ones row lies in its row space, and
+$v\mathbf K=\mathbf{1}^\transpose$ has a solution.
+Extending $M$ with such a row $v$ gives the desired matrix.
+A slight modification also proves linear independence of
+$\kero$, with slightly worse intermediate constants; see
+Remark~\ref{rem:linear-independence}.

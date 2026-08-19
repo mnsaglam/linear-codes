@@ -1,0 +1,144 @@
+% !TeX root = linear-codes.tex
+\section{Derivation of the moment and tail estimates}
+\label{sec:moment-tail-derivation}
+
+We derive \autoref{lem:ball-fourier-estimates} from
+\cite[Corollary 1.4 and Theorem 1.5]{KirshnerS2021}.
+Put $\rho=w/n$.  The third-moment specialization of their moment bound
+says that every polynomial $f$ of degree at most $w$ satisfies
+$$
+\E|f|^3
+\le
+(\E f^2)^{3/2}
+2^{n(\entb{\rho}/2-\gamma(\rho))},
+$$
+where
+$$
+\begin{aligned}
+\gamma(\rho)\defeq{}&
+-\frac{\rho}{2}\lg \rho-2(1-\rho)\lg(1-\rho)-1\\
+&+\left(1-\frac{3\rho}{2}\right)\lg(2-3\rho).
+\end{aligned}
+$$
+Indeed, the auxiliary parameter in their moment exponent satisfies
+$$
+1-2u=\sqrt{\frac{\rho}{2-3\rho}},
+$$
+and substitution gives the displayed expression.  Elementary
+calculus gives
+$$
+\gamma'(\rho)
+=\frac12\lg\frac{(1-\rho)^4}{\rho(2-3\rho)^3}.
+$$
+It follows that $\gamma$ is strictly positive on $(0,1/2)$ and
+$$
+\gamma(\rho)=\frac{\rho}{2}\lg\frac1\rho+O(\rho)
+\qquad(\rho\longrightarrow0).
+$$
+Consequently, for every fixed $\eta>0$, there is a constant
+$c_\eta>0$ such that
+$$
+\gamma(\rho)\ge c_\eta \rho\lg\frac1\rho
+\qquad
+\left(0<\rho\le\frac12-\eta\right).
+$$
+As a function of the signs
+$((-1)^{x_1},\ldots,(-1)^{x_n})$, the function
+$\widehat\mu(x)$ is a multilinear polynomial of degree at most
+$w$.  Moreover, Parseval's identity and Stirling's formula give
+$$
+\E_x\widehat\mu(x)^2=\frac1V,
+\qquad
+\lg V=n\entb{\rho}+O(\lg n).
+$$
+Applying the preceding moment estimate to $\widehat\mu$ gives
+$$
+\begin{aligned}
+Vn^2\E_x|\widehat\mu(x)|^3
+&\le
+n^2V^{-1/2}
+2^{n\entb{\rho}/2-c_\eta w\lg(n/w)}\\
+&=
+2^{-c_\eta w\lg(n/w)+O(\lg n)}
+=O(1/n),
+\end{aligned}
+$$
+where the last equality follows from $w\gg\ln n$.
+This proves the moment estimate in
+\autoref{lem:ball-fourier-estimates}.
+
+We next derive the tail estimate.  For
+$$
+0\le y\le\frac12-\sqrt{\rho(1-\rho)}
+$$
+define
+$$
+T(\rho,y)
+\defeq
+\entb{\rho}+
+\int_0^y
+\lg\left(
+\frac{1-2\rho+\sqrt{(1-2\rho)^2-4z(1-z)}}{2(1-z)}
+\right)\,dz.
+$$
+Kirshner and Samorodnitsky's tail bound says that, when $ny$ is an
+integer,
+$$
+\Pr\left[
+|f|\ge
+\sqrt{\E f^2}\,
+2^{n(T(\rho,y)-\entb{\rho}/2)}
+\right]
+\le
+2^{n(\entb{y}-1)}.
+$$
+The expression inside the logarithm defining $T$ is at most
+$1-2\rho$.  Therefore
+$$
+\entb{\rho}-T(\rho,y)
+\ge y\lg\frac1{1-2\rho}
+\ge\frac{2\rho y}{\ln2}.
+$$
+
+Take
+$$
+y=\frac1n\left\lceil\frac{n\lg n}{w}\right\rceil.
+$$
+Our assumption $w\gg\ln n$ gives $y\longrightarrow0$, so the
+permitted range for $y$ holds for all sufficiently large $n$.
+The standard estimate
+$$
+V\ge\binom nw\ge\frac{2^{n\entb{\rho}}}{n+1}
+$$
+and the preceding bound on $T$ give
+$$
+\begin{aligned}
+V^{-1/2}2^{n(T(\rho,y)-\entb{\rho}/2)}
+&\le
+\sqrt{n+1}\,2^{n(T(\rho,y)-\entb{\rho})}\\
+&\le
+\sqrt{n+1}\,2^{-2wy/\ln2}\\
+&\le
+\sqrt{n+1}\,n^{-2/\ln2}\\
+&\le\frac1n
+\end{aligned}
+$$
+for all sufficiently large $n$.  Hence the threshold in the
+tail bound is at most $1/n$.  Moreover,
+$$
+y\le\frac{\lg n}{w}+\frac1n
+\le\frac{2\lg n}{w}.
+$$
+Using $\entb{y}\le y\lg(e/y)$, we conclude that
+$$
+\begin{aligned}
+\Pr_x\sparen{|\widehat\mu(x)|>1/n}
+&\le
+2^{-n+n\entb{y}}\\
+&\le
+2^{-n+\frac{2n\lg n}{w}
+\lg\left(\frac{ew}{\lg n}\right)}.
+\end{aligned}
+$$
+This proves the tail estimate and completes the derivation of
+\autoref{lem:ball-fourier-estimates}.

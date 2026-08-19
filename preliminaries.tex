@@ -1,0 +1,125 @@
+% !TeX root = linear-codes.tex
+\section{Circuits and walks}
+\label{sec:approach}
+
+Put $w=d-1$.
+Fix $\eps>0$.  We work in the range
+$$
+\ln n\ll w\le(1/2-\eps)n.
+$$
+Define the redundancy parameter
+$$
+R\defeq\ln\frac{2^n}{V}.
+$$
+Our assumptions imply $R=\Theta(n)$.  Fix
+$0<\zeta<1$, and choose the integer $m$ so that, with
+$$
+\tau\defeq V2^{-m},
+$$
+we have
+$$
+\frac{(1-\zeta)R}{2}
+\le\tau<(1-\zeta)R.
+$$
+Such an $m$ exists because this interval has multiplicative width
+two.
+
+Choose $M$ uniformly from $\field_2^{m\times n}$ and put
+$$
+\kero\defeq\setbuilder{x\in\ball}{Mx=0}.
+$$
+A \emph{circuit} in $\ball$ is an inclusion-minimal linearly
+dependent subset.  If $\circuit_\ell$ is the collection of
+$\ell$-element circuits in $\ball$, then every
+$S\in\circuit_\ell$ satisfies
+$$
+\sum_{x\in S}x=0,
+\qquad
+\rank(S)=\ell-1,
+$$
+where $3\le\ell\le n+1$.
+
+Define the probability kernel
+$$
+\mu(x)\defeq\frac{\indicate{x\in\ball}}{V}.
+$$
+Let $X_1,X_2,\ldots$ be independent with law $\mu$, and set
+$$
+p_\ell\defeq\Pr[X_1+\cdots+X_\ell=0].
+$$
+Every circuit in $\circuit_\ell$ gives $\ell!$ distinct ordered
+tuples counted by this event.  Hence
+$$
+\size{\circuit_\ell}
+\le\frac{V^\ell}{\ell!}p_\ell.
+$$
+
+Let $Z$ be the number of odd circuits contained in $\kero$.
+Since the span of an $\ell$-element circuit has dimension
+$\ell-1$,
+$$
+\Pr[S\subseteq\ker M]
+=2^{-m(\ell-1)}
+=\nparen{\frac{\tau}{V}}^{\ell-1}.
+$$
+Consequently,
+$$
+\begin{aligned}
+\E Z
+&=\sum_{\substack{3\le\ell\le n+1\\\ell\text{ odd}}}
+  \size{\circuit_\ell}
+  \left(\frac{\tau}{V}\right)^{\ell-1}\\
+&\le\frac V\tau
+  \sum_{\substack{\ell\ge3\\\ell\text{ odd}}}
+  \frac{\tau^\ell}{\ell!}p_\ell.
+\end{aligned}
+$$
+
+It suffices to find a choice of $M$ for which $Z=0$.  Indeed,
+every zero-sum subset can be partitioned into circuits.  Hence, if
+$\kero$ contains no odd circuit, then every dependency among its
+elements has even cardinality.  Let $\mathbf K$ be the matrix whose
+columns are the elements of $\kero$.  The preceding statement means
+that
+$$
+\mathbf K a=0
+\quad\Longrightarrow\quad
+\mathbf1^\transpose a=0.
+$$
+Thus $\mathbf1^\transpose$ lies in the row space of $\mathbf K$,
+and there is a row vector $v$ satisfying
+$$
+v\mathbf K=\mathbf1^\transpose.
+$$
+Appending $v$ to $M$ then produces a parity-check matrix for a
+distance-$d$ code.
+
+We now express the sum above as a transition probability.  Let
+$J_t$ be Poisson with mean $t$, independently of the $X_i$, and
+define the continuous-time random walk on $\field_2^{n+1}$ by
+$$
+W_t\defeq\sum_{i=1}^{J_t}(X_i,1).
+$$
+The walk starts at zero.  Write
+$$
+e_{n+1}\defeq(0,\ldots,0,1).
+$$
+Conditioning on the number of steps gives
+$$
+e^\tau\Pr[W_\tau=e_{n+1}]
+=
+\sum_{\substack{\ell\ge3\\\ell\text{ odd}}}
+\frac{\tau^\ell}{\ell!}p_\ell,
+$$
+where the one-step term vanishes because $0\notin\ball$.
+Consequently,
+$$
+\E Z
+\le
+\frac{Ve^\tau}{\tau}\Pr[W_\tau=e_{n+1}].
+$$
+It remains to prove
+$$
+\Pr[W_\tau=e_{n+1}]
+<\frac{\tau e^{-\tau}}{V}.
+$$

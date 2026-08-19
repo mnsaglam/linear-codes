@@ -1,0 +1,87 @@
+% !TeX root = linear-codes.tex
+% The binary matrix-vector product illustrated with marks and empty cells.
+\begin{center}
+\begin{tikzpicture}[x=2.3mm,y=2.3mm]
+  \tikzset{binary grid line/.style={
+    draw=black!55,
+    line width=.22pt,
+    line cap=butt
+  }}
+  \def\zeromarkhalfwidth{.36}
+  \def\zeromarkcorner{.90pt}
+
+  % Draw a binary grid from row-major data, with the top row first.
+  % Arguments: lower-left x, lower-left y, rows, columns, data.
+  % Ones are centered purple rounded squares that do not touch the cell walls.
+  % The complete grid is drawn afterward as
+  % rows+1 uninterrupted horizontal lines and columns+1 vertical lines.
+  \newcommand{\drawbinarygrid}[5]{%
+    \path[fill=white] (#1,#2) rectangle ++(#4,#3);
+    \edef\binarydata{#5}
+    \foreach \bit [count=\cell from 0] in \binarydata {%
+      \pgfmathtruncatemacro{\gridrow}{int(\cell/#4)}
+      \pgfmathtruncatemacro{\gridcol}{mod(\cell,#4)}
+      \ifnum\bit=1\relax
+        \path[fill=purple,rounded corners=\zeromarkcorner]
+          ({#1+\gridcol+.5-\zeromarkhalfwidth},
+           {#2+#3-\gridrow-.5-\zeromarkhalfwidth})
+          rectangle
+          ({#1+\gridcol+.5+\zeromarkhalfwidth},
+           {#2+#3-\gridrow-.5+\zeromarkhalfwidth});
+      \fi
+    }
+    \foreach \gridrow in {0,...,#3} {
+      \draw[binary grid line]
+        (#1,{#2+\gridrow}) -- ++(#4,0);
+    }
+    \foreach \gridcol in {0,...,#4} {
+      \draw[binary grid line]
+        ({#1+\gridcol},#2) -- ++(0,#3);
+    }
+  }
+
+  \def\matrixrows{10}
+  \def\matrixcols{18}
+  \def\matrixleft{7}
+  \def\matrixbottom{1}
+
+  \def\xdata{0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0}
+  \def\ydata{0,0,0,0,0,0,0,1,1,1}
+  \def\matrixdata{
+    1,1,0,1,0,0,1,1,0,0,1,1,0,1,1,0,0,1,
+    0,0,1,0,1,1,1,0,1,1,1,0,1,0,0,1,1,0,
+    0,0,1,1,0,1,0,1,1,0,0,1,1,0,1,0,1,1,
+    1,1,0,0,1,0,1,1,0,1,1,0,0,1,0,1,0,0,
+    1,1,1,0,0,1,0,0,1,1,0,1,1,0,0,1,1,0,
+    0,0,1,1,1,0,1,1,1,0,1,0,0,1,1,0,0,1,
+    1,1,1,0,0,0,0,1,0,1,1,0,1,0,0,1,1,0,
+    0,0,0,1,1,1,1,0,1,0,1,1,0,0,1,0,0,1,
+    0,1,0,1,1,0,1,0,1,1,0,1,0,1,1,0,1,1,
+    1,1,1,0,0,0,1,1,0,1,0,0,1,1,0,1,0,0
+  }
+
+  % Derive the layout from the matrix dimensions.
+  \pgfmathsetmacro{\matrixcenterx}{\matrixleft+\matrixcols/2}
+  \pgfmathsetmacro{\matrixcentery}{\matrixbottom+\matrixrows/2}
+  \pgfmathsetmacro{\matrixtop}{\matrixbottom+\matrixrows}
+  \pgfmathsetmacro{\xgridbottom}{\matrixtop+1.5}
+  \pgfmathsetmacro{\xgridtop}{\xgridbottom+1}
+  \pgfmathsetmacro{\legendheight}{\matrixbottom-.45}
+
+  % x is aligned with the matrix columns and separated by 1.5 cells.
+  \drawbinarygrid{\matrixleft}{\xgridbottom}
+    {1}{\matrixcols}{\xdata}
+  \drawbinarygrid{0}{\matrixbottom}
+    {\matrixrows}{1}{\ydata}
+  \drawbinarygrid{\matrixleft}{\matrixbottom}
+    {\matrixrows}{\matrixcols}{\matrixdata}
+
+  \node[left=2.5pt] at (0,\matrixcentery) {$y$};
+  \node at (3.8,\matrixcentery) {$=$};
+  \node[above=1.5pt] at (\matrixcenterx,\xgridtop) {$x$};
+\end{tikzpicture}
+
+\vspace{2mm}
+{\footnotesize The filled cells of $x$ select columns of $M$;
+their sum is $y=Mx$.}
+\end{center}
